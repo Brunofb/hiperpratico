@@ -1,26 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hiperpratico/src/config/custom_colors.dart';
-import 'package:hiperpratico/src/routes/app_pages.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(const Duration(seconds: 3), (){
-      Get.offNamed(PagesRoutes.signInRoute);
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {

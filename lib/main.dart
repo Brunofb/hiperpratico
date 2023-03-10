@@ -4,6 +4,7 @@ import 'package:hiperpratico/src/pages/auth/controller/auth_controller.dart';
 import 'package:hiperpratico/src/routes/app_pages.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(AuthController());
 

@@ -5,7 +5,7 @@ import 'package:hiperpratico/src/config/custom_colors.dart';
 import 'package:hiperpratico/src/pages/auth/controller/auth_controller.dart';
 import 'package:hiperpratico/src/routes/app_pages.dart';
 
-import '../common_widgets/custom_text_field.dart';
+import '../../common_widgets/custom_text_field.dart';
 
 class SignInScreen extends StatelessWidget {
   final emailController = TextEditingController();
@@ -102,8 +102,8 @@ class SignInScreen extends StatelessWidget {
                             return 'Digite sua senha';
                           }
 
-                          if (password.length < 7) {
-                            return 'Digite uma senha com pelo menos 8 caracteres';
+                          if (password.length < 5) {
+                            return 'Digite uma senha maior que 6 caracteres';
                           }
 
                           return null;
@@ -127,17 +127,13 @@ class SignInScreen extends StatelessWidget {
                                       FocusScope.of(context).unfocus();
                                       if (_formKey.currentState!.validate()) {
                                         String email = emailController.text;
-                                        String password = emailController.text;
+                                        String password = passwordController.text;
 
                                         authController.signIn(
                                           email: email,
                                           password: password,
                                         );
-                                      } else {
-                                        print('Campos não válidos!');
                                       }
-
-                                      //Get.offNamed(PagesRoutes.baseRoute);
                                     },
                               child: authController.isLoading.value
                                   ? const CircularProgressIndicator()
