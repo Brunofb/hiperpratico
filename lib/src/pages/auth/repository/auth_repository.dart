@@ -6,20 +6,22 @@ import 'package:hiperpratico/src/services/http_manager.dart';
 class AuthRepository {
   final HttpManager _httpManager = HttpManager();
 
-  Future validateToken(String token) async {
-    final result = await _httpManager.restRequest(
-      url: Endpoints.validateToken,
-      method: HttpMethods.post,
-      headers: {
-        'X-Parse-Session-Token': token
-      },
-    );
+  AuthResult handleUserOrError(Map<dynamic, dynamic> result) {
     if (result['result'] != null) {
       final user = UserModel.fromJson(result['result']);
       return AuthResult.success(user);
     } else {
       return AuthResult.error(result['error']);
     }
+  }
+
+  Future validateToken(String token) async {
+    final result = await _httpManager.restRequest(
+      url: Endpoints.validateToken,
+      method: HttpMethods.post,
+      headers: {'X-Parse-Session-Token': token},
+    );
+    return handleUserOrError(result);
   }
 
   Future<AuthResult> signIn(
@@ -32,11 +34,23 @@ class AuthRepository {
         'password': password,
       },
     );
-    if (result['result'] != null) {
-      final user = UserModel.fromJson(result['result']);
-      return AuthResult.success(user);
-    } else {
-      return AuthResult.error(result['error']);
-    }
+    return handleUserOrError(result);
+  }
+
+  Future<AuthResult> signUp(UserModel user) async {
+    final result = await _httpManager.restRequest(
+      url: Endpoints.signup,
+      method: HttpMethods.post,
+      body: user.toJson(),
+    );
+    return handleUserOrError(result);
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _httpManager.restRequest(
+      url: Endpoints.resetPassword,
+      method: HttpMethods.post,
+      body: {'email': email},
+    );
   }
 }

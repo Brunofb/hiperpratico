@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiperpratico/src/config/custom_colors.dart';
 import 'package:hiperpratico/src/pages/auth/controller/auth_controller.dart';
+import 'package:hiperpratico/src/pages/auth/view/components/forgot_password_dialog.dart';
 import 'package:hiperpratico/src/routes/app_pages.dart';
+import 'package:hiperpratico/src/services/utils.services.dart';
+import 'package:hiperpratico/src/services/validators.dart';
 
 import '../../common_widgets/custom_text_field.dart';
 
@@ -14,6 +17,7 @@ class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
+  final utilServices = UtilsServices();
 
   @override
   Widget build(BuildContext context) {
@@ -80,34 +84,14 @@ class SignInScreen extends StatelessWidget {
                         controller: emailController,
                         icon: Icons.email,
                         label: 'Email',
-                        validator: (email) {
-                          if (email == null || email.isEmpty) {
-                            return 'Digite seu email';
-                          }
-
-                          if (!email.isEmail) {
-                            return 'Digite um email válido!';
-                          }
-
-                          return null;
-                        },
+                        validator: emailValidator,
                       ),
                       CustomTextField(
                         controller: passwordController,
                         icon: Icons.lock,
                         label: 'Senha',
                         isSecret: true,
-                        validator: (password) {
-                          if (password == null || password.isEmpty) {
-                            return 'Digite sua senha';
-                          }
-
-                          if (password.length < 5) {
-                            return 'Digite uma senha maior que 6 caracteres';
-                          }
-
-                          return null;
-                        },
+                        validator: passwordValidator,
                       ),
 
                       //Botão de entrar
@@ -127,9 +111,10 @@ class SignInScreen extends StatelessWidget {
                                       FocusScope.of(context).unfocus();
                                       if (_formKey.currentState!.validate()) {
                                         String email = emailController.text;
-                                        String password = passwordController.text;
+                                        String password =
+                                            passwordController.text;
 
-                                        authController.signIn(
+                                        authController.signInController(
                                           email: email,
                                           password: password,
                                         );
@@ -140,7 +125,9 @@ class SignInScreen extends StatelessWidget {
                                   : const Text(
                                       'Entrar',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
                                     ),
                             );
                           },
@@ -151,7 +138,21 @@ class SignInScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            final bool? result = await showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return ForgotPasswordDialog(
+                                    email: emailController.text,
+                                  );
+                                });
+                            if (result ?? false) {
+                              utilServices.showToast(
+                                message:
+                                    'Um link de recuperação de senha foi enviado para os eu email.',
+                              );
+                            }
+                          },
                           child: Text(
                             'Esqueceu a senha?',
                             style: TextStyle(
