@@ -40,7 +40,7 @@ class UtilsServices {
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 3,
       backgroundColor: isError ? Colors.red : Colors.white,
-      textColor: isError ? Colors.white : Colors.black,
+      textColor: isError ? Colors.orange : Colors.black,
       fontSize: 14,
     );
   }

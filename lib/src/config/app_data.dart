@@ -5,6 +5,7 @@ import 'package:hiperpratico/src/models/user_model.dart';
 import '../models/cart_item_model.dart';
 
 ItemModel gatorade = ItemModel(
+  id: 'sblJ84DlNb',
   imgUrl: 'assets/products/7892840808013.jpg',
   itemName: 'Gatorade Frutas Cítricas Garrafa 500ML',
   price: 4.5,
@@ -13,6 +14,7 @@ ItemModel gatorade = ItemModel(
 );
 
 ItemModel rexona = ItemModel(
+  id: 'sblJ84DlNb',
   imgUrl: 'assets/products/7791293990569.jpg',
   itemName: 'Desodorante Rexona Aerosol Active Masculino 90G',
   price: 12.9,
@@ -21,6 +23,7 @@ ItemModel rexona = ItemModel(
 );
 
 ItemModel talento = ItemModel(
+  id: 'sblJ84DlNb',
   imgUrl: 'assets/products/7891008230000.jpg',
   itemName: 'Talento Branco Crocante Garoto',
   price: 5.59,
@@ -29,6 +32,7 @@ ItemModel talento = ItemModel(
 );
 
 ItemModel cerveja = ItemModel(
+  id: 'sblJ84DlNb',
   imgUrl: 'assets/products/7891149010509.jpg',
   itemName: 'Cerveja Pilsen Brahma Chopp Lata 350ML',
   price: 2.5,
@@ -37,6 +41,7 @@ ItemModel cerveja = ItemModel(
 );
 
 ItemModel sabao = ItemModel(
+  id: 'sblJ84DlNb',
   imgUrl: 'assets/products/7891150000100.jpg',
   itemName: 'Sabão Em Pó OMO Multiação Tanquinho 1KG',
   price: 12.9,
@@ -45,6 +50,7 @@ ItemModel sabao = ItemModel(
 );
 
 ItemModel refri = ItemModel(
+  id: 'sblJ84DlNb',
   imgUrl: 'assets/products/7892840127411.jpg',
   itemName: 'Refrigerante Guaraná Kuat Garrafa 500ML',
   price: 6.5,
