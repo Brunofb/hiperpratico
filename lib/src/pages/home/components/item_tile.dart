@@ -60,7 +60,7 @@ class _ItemTileState extends State<ItemTile> {
                     child: Hero(
                       tag: widget.item.imgUrl,
                       child: Image.network(
-                        widget.item.imgUrl,
+                        '',
                         key: imageGK,
                       ),
                     ),

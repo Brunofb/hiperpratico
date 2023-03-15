@@ -6,13 +6,11 @@ import 'package:hiperpratico/src/services/utils.services.dart';
 class ItemTileVertical extends StatefulWidget {
   final ItemModel item;
   final void Function(GlobalKey) cartAnimationMethod;
-  final Function() qtdCart;
 
   const ItemTileVertical({
     Key? key,
     required this.item,
     required this.cartAnimationMethod,
-    required this.qtdCart,
   }) : super(key: key);
 
   @override
@@ -52,7 +50,7 @@ class _ItemTileVerticalState extends State<ItemTileVertical> {
               flex: 1,
               child: Hero(
                 tag: widget.item.imgUrl,
-                child: Image.asset(
+                child: Image.network(
                   key: imageGK,
                   widget.item.imgUrl,
                 ),
@@ -97,7 +95,6 @@ class _ItemTileVerticalState extends State<ItemTileVertical> {
                       onPressed: () {
                         switchIcon();
                         setState(() {
-                          widget.qtdCart;
                         });
                         widget.cartAnimationMethod(imageGK);
                       },

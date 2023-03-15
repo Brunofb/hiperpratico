@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hiperpratico/src/config/custom_colors.dart';
 import 'package:hiperpratico/src/models/cart_item_model.dart';
+import 'package:hiperpratico/src/pages/cart/view/components/cart_tile.dart';
 import 'package:hiperpratico/src/pages/common_widgets/payment_dialog.dart';
 import 'package:hiperpratico/src/services/utils.services.dart';
 import 'package:hiperpratico/src/config/app_data.dart' as app_data;
 
-import 'components/cart_tile.dart';
+
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
