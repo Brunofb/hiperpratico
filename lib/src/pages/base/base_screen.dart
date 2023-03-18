@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiperpratico/src/pages/base/controller/navigation_controller.dart';
 import 'package:hiperpratico/src/pages/cart/view/cart_tab.dart';
-import 'package:hiperpratico/src/pages/orders/orders_tab.dart';
+import 'package:hiperpratico/src/pages/orders/view/orders_tab.dart';
 import 'package:hiperpratico/src/pages/profile/profile_tab.dart';
 
 import '../home/view/home_tab.dart';

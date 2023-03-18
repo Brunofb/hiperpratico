@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hiperpratico/src/config/custom_colors.dart';
 import 'package:hiperpratico/src/models/item_model.dart';
-import 'package:hiperpratico/src/pages/product/products_screen.dart';
 import 'package:hiperpratico/src/services/utils.services.dart';
 
 class ItemTile extends StatefulWidget {
@@ -37,13 +36,13 @@ class _ItemTileState extends State<ItemTile> {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => ProductScreen(
-                  item: widget.item,
-                ),
-              ),
-            );
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (_) => ProductScreen(
+            //       item: widget.item,
+            //     ),
+            //   ),
+            // );
           },
           child: Card(
             elevation: 1,

@@ -43,6 +43,30 @@ class AuthController extends GetxController {
     Get.offAllNamed(PagesRoutes.baseRoute);
   }
 
+  Future<void> changePasswordController({
+    required String password,
+    required String newPassword,
+  }) async {
+    isLoading.value = true;
+    final result = await authRepository.changePassword(
+      email: user.email!,
+      password: password,
+      newPassword: newPassword,
+      token: user.token!,
+    );
+    isLoading.value = false;
+
+    if (result) {
+      utilsServices.showToast(message: 'A senha foi atualizada com suecesso!');
+      signOutController();
+    } else {
+      utilsServices.showToast(
+        message: 'A senha atual está incorreta!',
+        isError: true,
+      );
+    }
+  }
+
   Future<void> resetPasswordController(String email) async {
     await authRepository.resetPassword(email);
   }

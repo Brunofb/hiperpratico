@@ -1,0 +1,43 @@
+import 'package:get/get.dart';
+import 'package:hiperpratico/src/models/cart_item_model.dart';
+import 'package:hiperpratico/src/models/order_model.dart';
+import 'package:hiperpratico/src/pages/auth/controller/auth_controller.dart';
+import 'package:hiperpratico/src/pages/orders/repository/orders_repository.dart';
+import 'package:hiperpratico/src/pages/orders/result/orders_result.dart';
+import 'package:hiperpratico/src/services/utils.services.dart';
+
+class OrderController extends GetxController {
+  OrderModel order;
+
+  OrderController(this.order);
+
+  final orderRepository = OrdersRepository();
+  final authController = Get.find<AuthController>();
+  final utilsServices = UtilsServices();
+  bool isLoading = false;
+
+  void setLoading(bool value) {
+    isLoading = value;
+    update();
+  }
+
+  Future<void> getOrderItems() async {
+    setLoading(true);
+    final OrdersResult<List<CartItemModel>> result =
+        await orderRepository.getOrderItems(
+      orderId: order.id,
+      token: authController.user.token!,
+    );
+    setLoading(false);
+
+    result.when(success: (items) {
+      order.items = items;
+      update();
+    }, error: (message) {
+      return utilsServices.showToast(
+        message: message,
+        isError: true,
+      );
+    });
+  }
+}

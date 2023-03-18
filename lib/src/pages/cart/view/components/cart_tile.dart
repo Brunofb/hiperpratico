@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hiperpratico/src/config/custom_colors.dart';
 import 'package:hiperpratico/src/models/cart_item_model.dart';
+import 'package:hiperpratico/src/pages/cart/controller/cart_controller.dart';
 import 'package:hiperpratico/src/pages/common_widgets/quantity_widget.dart';
 import 'package:hiperpratico/src/services/utils.services.dart';
 
 class CartTile extends StatefulWidget {
   final CartItemModel cartItemModel;
-  final Function(CartItemModel) remove;
 
   const CartTile({
     Key? key,
     required this.cartItemModel,
-    required this.remove,
   }) : super(key: key);
 
   @override
@@ -20,6 +20,7 @@ class CartTile extends StatefulWidget {
 
 class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
+  final cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class _CartTileState extends State<CartTile> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
-        leading: Image.asset(
+        leading: Image.network(
           widget.cartItemModel.item.imgUrl,
           height: 60,
           width: 60,
@@ -48,12 +49,10 @@ class _CartTileState extends State<CartTile> {
           suffixText: widget.cartItemModel.item.unit,
           value: widget.cartItemModel.quantity,
           result: (quantity) {
-            setState(() {
-              widget.cartItemModel.quantity = quantity;
-              if(quantity == 0) {
-                widget.remove(widget.cartItemModel);
-              }
-            });
+            cartController.changeItemQuantity(
+              item: widget.cartItemModel,
+              quantity: quantity,
+            );
           },
           isRemovable: true,
         ),
