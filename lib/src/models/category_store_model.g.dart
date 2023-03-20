@@ -1,26 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category_model.dart';
+part of 'category_store_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
-    CategoryModel(
+CategoryStoreModel _$CategoryStoreModelFromJson(Map<String, dynamic> json) =>
+    CategoryStoreModel(
       id: json['id'] as String,
       name: json['name'] as String,
-      items: (json['items'] as List<dynamic>?)
-              ?.map((e) => ItemModel.fromJson(e as Map<String, dynamic>))
+      stories: (json['stories'] as List<dynamic>?)
+              ?.map((e) => StoreModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
+      imageUrl: json['image'] as String,
       pagination: json['pagination'] as int? ?? 0,
     );
 
-Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) =>
+Map<String, dynamic> _$CategoryStoreModelToJson(CategoryStoreModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'items': instance.items,
+      'stories': instance.stories,
+      'image': instance.imageUrl,
       'pagination': instance.pagination,
     };

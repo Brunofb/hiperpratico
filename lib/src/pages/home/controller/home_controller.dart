@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hiperpratico/src/models/category_model.dart';
+import 'package:hiperpratico/src/models/category_product_model.dart';
 import 'package:hiperpratico/src/models/item_model.dart';
 import 'package:hiperpratico/src/pages/home/repository/home_repository.dart';
 import 'package:hiperpratico/src/pages/home/result/home_result.dart';
@@ -24,8 +24,8 @@ class HomeController extends GetxController {
 
   bool isCategoryLoading = false;
   bool isProductLoading = true;
-  List<CategoryModel> allCategories = [];
-  CategoryModel? currentCategory;
+  List<CategoryProductModel> allCategories = [];
+  CategoryProductModel? currentCategory;
 
   List<ItemModel> get allProducts => currentCategory?.items ?? [];
   RxString searchTitle = "".obs;
@@ -46,7 +46,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  void selectCategory(CategoryModel category) {
+  void selectCategory(CategoryProductModel category) {
     currentCategory = category;
     update();
     if (currentCategory!.items.isNotEmpty) return;
@@ -55,7 +55,7 @@ class HomeController extends GetxController {
 
   Future<void> getAllCategoriesController() async {
     setLoading(true);
-    HomeResult<CategoryModel> homeResult =
+    HomeResult<CategoryProductModel> homeResult =
         await homeRepository.getAllCategories();
     setLoading(false);
 
@@ -80,10 +80,10 @@ class HomeController extends GetxController {
     if (searchTitle.value.isEmpty) {
       allCategories.removeAt(0);
     } else {
-      CategoryModel? c =
+      CategoryProductModel? c =
           allCategories.firstWhereOrNull((category) => category.id == '');
       if (c == null) {
-        final allProductsCategory = CategoryModel(
+        final allProductsCategory = CategoryProductModel(
           name: 'Todos',
           id: '',
           items: [],

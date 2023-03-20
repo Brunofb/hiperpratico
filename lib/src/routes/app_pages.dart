@@ -8,6 +8,7 @@ import 'package:hiperpratico/src/pages/home/binding/home_binding.dart';
 import 'package:hiperpratico/src/pages/orders/binding/orders_binding.dart';
 import 'package:hiperpratico/src/pages/product/products_screen.dart';
 import 'package:hiperpratico/src/pages/splash/splash_screen.dart';
+import 'package:hiperpratico/src/pages/store/binding/store_binding.dart';
 
 abstract class PagesRoutes {
   static const String signInRoute = '/signin';
@@ -40,6 +41,7 @@ abstract class AppPages {
       name: PagesRoutes.baseRoute,
       bindings: [
         NavigationBinding(),
+        StoreBinding(),
         HomeBinding(),
         CartBinding(),
         OrdersBinding(),

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiperpratico/src/pages/base/controller/navigation_controller.dart';
 import 'package:hiperpratico/src/pages/cart/view/cart_tab.dart';
+import 'package:hiperpratico/src/pages/home_global/home_global.dart';
 import 'package:hiperpratico/src/pages/orders/view/orders_tab.dart';
 import 'package:hiperpratico/src/pages/profile/profile_tab.dart';
-
-import '../home/view/home_tab.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _BaseScreenState extends State<BaseScreen> {
         physics: const NeverScrollableScrollPhysics(),
         controller: navigationController.pageController,
         children: const [
-          HomeTab(),
+          HomePageGlobal(),
           CartTab(),
           OrdersTab(),
           ProfileTab(),

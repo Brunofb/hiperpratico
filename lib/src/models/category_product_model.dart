@@ -1,10 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hiperpratico/src/models/item_model.dart';
 
-part 'category_model.g.dart';
+part 'category_product_model.g.dart';
 
 @JsonSerializable()
-class CategoryModel {
+class CategoryProductModel {
   String id;
   String name;
 
@@ -14,17 +14,17 @@ class CategoryModel {
   @JsonKey(defaultValue: 0)
   int pagination;
 
-  CategoryModel({
+  CategoryProductModel({
     required this.id,
     required this.name,
     required this.items,
     required this.pagination,
   });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) =>
-      _$CategoryModelFromJson(json);
+  factory CategoryProductModel.fromJson(Map<String, dynamic> json) =>
+      _$CategoryProductModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
+  Map<String, dynamic> toJson() => _$CategoryProductModelToJson(this);
 
   @override
   String toString() {

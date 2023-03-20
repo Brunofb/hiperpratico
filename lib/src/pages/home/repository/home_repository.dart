@@ -1,5 +1,5 @@
 import 'package:hiperpratico/src/constants/endpoints.dart';
-import 'package:hiperpratico/src/models/category_model.dart';
+import 'package:hiperpratico/src/models/category_product_model.dart';
 import 'package:hiperpratico/src/models/item_model.dart';
 import 'package:hiperpratico/src/pages/home/result/home_result.dart';
 import 'package:hiperpratico/src/services/http_manager.dart';
@@ -7,18 +7,18 @@ import 'package:hiperpratico/src/services/http_manager.dart';
 class HomeRepository {
   final HttpManager _httpManager = HttpManager();
 
-  Future<HomeResult<CategoryModel>> getAllCategories() async {
+  Future<HomeResult<CategoryProductModel>> getAllCategories() async {
     final result = await _httpManager.restRequest(
       url: Endpoints.getAllCategories,
       method: HttpMethods.post,
     );
 
     if (result['result'] != null) {
-      List<CategoryModel> data =
+      List<CategoryProductModel> data =
           (List<Map<String, dynamic>>.from(result['result']))
-              .map(CategoryModel.fromJson)
+              .map(CategoryProductModel.fromJson)
               .toList();
-      return HomeResult<CategoryModel>.success(data);
+      return HomeResult<CategoryProductModel>.success(data);
     } else {
       return HomeResult.error(
         'Ocorreu um erro inesperado ao recuperar as categorias!',
