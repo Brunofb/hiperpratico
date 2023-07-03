@@ -27,8 +27,10 @@ class HomeController extends GetxController {
   List<CategoryProductModel> allCategories = [];
   CategoryProductModel? currentCategory;
 
+
   List<ItemModel> get allProducts => currentCategory?.items ?? [];
-  RxString searchTitle = "".obs;
+  RxString searchTitle = ''.obs;
+  RxString storeId = ''.obs;
 
   bool get isLastPage {
     if (currentCategory!.items.length < itemsPerPage) {
@@ -51,6 +53,16 @@ class HomeController extends GetxController {
     update();
     if (currentCategory!.items.isNotEmpty) return;
     getAllProductsController();
+  }
+
+  void setStoreId(String value) {
+    storeId.value = value;
+    for (var category in allCategories) {
+      category.items.clear();
+      category.pagination = 0;
+    }
+    getAllProductsController();
+    update();
   }
 
   Future<void> getAllCategoriesController() async {
@@ -121,6 +133,9 @@ class HomeController extends GetxController {
       if (currentCategory!.id == '') {
         body.remove('categoryId');
       }
+    }
+    if (storeId.value.isNotEmpty) {
+      body['storeId'] = storeId.value;
     }
 
     HomeResult<ItemModel> result = await homeRepository.getAllProducts(body);

@@ -5,10 +5,10 @@ class BuildFAB extends StatefulWidget {
   const BuildFAB({super.key});
 
   @override
-  _BuildFABState createState() => _BuildFABState();
+  BuildFABState createState() => BuildFABState();
 }
 
-class _BuildFABState extends State<BuildFAB> {
+class BuildFABState extends State<BuildFAB> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(

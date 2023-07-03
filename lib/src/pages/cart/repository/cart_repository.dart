@@ -46,11 +46,26 @@ class CartRepository {
     );
 
     if (result['result'] != null) {
-      print(result['result']);
       final order = OrderModel.fromJson(result['result']);
       return CartResult.success(order);
     } else {
       return CartResult.error('Não foi possível criar o pedido!');
+    }
+  }
+
+  Future<String> clearAllCartItems(
+      {required String token}) async {
+    final result = await _httpManager.restRequest(
+      url: Endpoints.clearAllCart,
+      method: HttpMethods.post,
+      headers: {
+        'X-Parse-Session-Token': token,
+      },
+    );
+    if(result['result'] != null) {
+      return 'Carrinho limpo com sucesso!';
+    }else{
+      return 'Houve um erro ao limpar o carrinho';
     }
   }
 

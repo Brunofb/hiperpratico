@@ -126,7 +126,6 @@ class SignUpScreen extends StatelessWidget {
                                     if (_formKey.currentState!.validate()) {
                                       _formKey.currentState!.save();
                                       authController.singUpController();
-                                      print(authController.user.phone);
                                     }
                                   },
                             child: authController.isLoading.value

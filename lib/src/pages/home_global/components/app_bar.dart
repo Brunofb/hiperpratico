@@ -8,13 +8,13 @@ AppBar buildAppBar() => AppBar(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Text(
-            'Seu local: ',
+            'Seu endereço: ',
             style: TextStyle(
               fontSize: 14,
               color: Colors.orange,
             ),
           ),
-          Icon(Icons.location_on, size: 15, color: Colors.orange),
+          //Icon(Icons.location_on, size: 15, color: Colors.orange),
           Text(
             'Rua Francisca Madalena -',
             style: TextStyle(

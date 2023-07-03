@@ -8,12 +8,19 @@ class StoreModel {
   String name;
   @JsonKey(name: 'image')
   String imageUrl;
+  @JsonKey(defaultValue: false)
+  bool open;
+  DateTime startService;
+  DateTime endService;
 
-  StoreModel(
-    this.id,
-    this.name,
-    this.imageUrl,
-  );
+  StoreModel({
+    required this.id,
+    required this.name,
+    required this.imageUrl,
+    required this.open,
+    required this.startService,
+    required this.endService,
+  });
 
   factory StoreModel.fromJson(Map<String, dynamic> json) =>
       _$StoreModelFromJson(json);
@@ -22,6 +29,6 @@ class StoreModel {
 
   @override
   String toString() {
-    return 'StoreModel{id: $id, name: $name, imageUrl: $imageUrl}';
+    return 'StoreModel{id: $id, name: $name, imageUrl: $imageUrl, open: $open, startService: $startService, endService: $endService}';
   }
 }

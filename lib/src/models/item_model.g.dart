@@ -13,6 +13,7 @@ ItemModel _$ItemModelFromJson(Map<String, dynamic> json) => ItemModel(
       unit: json['unit'] as String,
       price: (json['price'] as num).toDouble(),
       description: json['description'] as String,
+      store: StoreModel.fromJson(json['store'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ItemModelToJson(ItemModel instance) => <String, dynamic>{
@@ -22,4 +23,5 @@ Map<String, dynamic> _$ItemModelToJson(ItemModel instance) => <String, dynamic>{
       'unit': instance.unit,
       'price': instance.price,
       'description': instance.description,
+      'store': instance.store,
     };

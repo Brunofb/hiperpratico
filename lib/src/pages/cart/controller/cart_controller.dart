@@ -42,18 +42,22 @@ class CartController extends GetxController {
         : cartItems.map((e) => e.quantity).reduce((a, b) => a + b);
   }
 
-  void setCheckLoadind(bool value) {
+  void setCheckLoading(bool value) {
     isCheckoutLoading = value;
     update();
   }
 
+  Future clearAllCartItems() async {
+
+  }
+
   Future checkoutCartController() async {
-    setCheckLoadind(true);
+    setCheckLoading(true);
     CartResult<OrderModel> result = await cartRepository.checkoutCart(
       token: authController.user.token!,
       total: cartTotalPrice(),
     );
-    setCheckLoadind(false);
+    setCheckLoading(false);
 
 
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hiperpratico/src/models/item_model.dart';
 import 'package:hiperpratico/src/pages/cart/controller/cart_controller.dart';
-import 'package:hiperpratico/src/pages/product/products_screen.dart';
 import 'package:hiperpratico/src/routes/app_pages.dart';
 import 'package:hiperpratico/src/services/utils.services.dart';
 
@@ -27,6 +26,7 @@ class _ItemTileVerticalState extends State<ItemTileVertical> {
   final cartController = Get.find<CartController>();
 
   IconData tileIcon = Icons.add_shopping_cart_outlined;
+  int cartItemQuantity = 1;
 
   Future<void> switchIcon() async {
     setState(() => tileIcon = Icons.check);
@@ -36,89 +36,158 @@ class _ItemTileVerticalState extends State<ItemTileVertical> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      GestureDetector(
-        onTap: () {
-          Get.toNamed(PagesRoutes.productRoute, arguments: widget.item);
-        },
-        child: Card(
-          elevation: 1,
-          shadowColor: Colors.grey.shade300,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                flex: 1,
-                child: Hero(
-                  tag: widget.item.imgUrl,
-                  child: Image.network(
-                    key: imageGK,
-                    widget.item.imgUrl,
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(PagesRoutes.productRoute, arguments: widget.item);
+          },
+          child: Card(
+            elevation: 1,
+            color: const Color(0xFFF2F7FA),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Hero(
+                    tag: widget.item.imgUrl,
+                    child: Image.network(
+                      key: imageGK,
+                      widget.item.imgUrl,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(widget.item.itemName),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        utilsServices.priceToCurrency(widget.item.price),
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text(widget.item.itemName),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text('/${widget.item.unit}'),
-                    ),
-                    Container(
-                      alignment: Alignment.bottomRight,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          alignment: Alignment.center,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              10,
+                      Text.rich(
+                        TextSpan(
+                          style: const TextStyle(fontSize: 16),
+                          children: [
+                            TextSpan(
+                              text: utilsServices
+                                  .priceToCurrency(widget.item.price),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '/${widget.item.unit}',
+                              style: const TextStyle(
+                                fontSize: 12,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: ElevatedButton.icon(
+                          onPressed: () async {
+                            switchIcon();
+                            if (cartController.cartItems.isNotEmpty) {
+                              if (widget.item.store.id !=
+                                  cartController.cartItems[0].item.store.id) {
+                                bool? result = await showAddItemConfirmation();
+
+                                if (result ?? false) {
+                                  cartController.cartItems.clear();
+                                  utilsServices.showToast(
+                                      message: 'Carrinho limpo!');
+
+                                  cartController.addItemToCart(
+                                    item: widget.item,
+                                    quantity: cartItemQuantity,
+                                  );
+                                  utilsServices.showToast(
+                                      message: 'Produto adicionado!');
+                                } else {
+                                  utilsServices.showToast(
+                                      message: 'Carrinho preservado!');
+                                }
+                              } else {
+                                cartController.addItemToCart(
+                                  item: widget.item,
+                                  quantity: cartItemQuantity,
+                                );
+                                utilsServices.showToast(
+                                    message: 'Produto adicionado!');
+                              }
+                            } else {
+                              cartController.addItemToCart(
+                                item: widget.item,
+                                quantity: cartItemQuantity,
+                              );
+                              utilsServices.showToast(
+                                  message: 'Produto adicionado!');
+                            }
+                            widget.cartAnimationMethod(imageGK);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                        ),
-                        onPressed: () {
-                          switchIcon();
-                          cartController.addItemToCart(item: widget.item);
-                          widget.cartAnimationMethod(imageGK);
-                        },
-                        label: const Text(
-                          'Adicionar ao Carrinho',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
+                          icon: Icon(
+                            Icons.add_shopping_cart,
+                            size: 20,
                           ),
-                        ),
-                        icon: Icon(
-                          tileIcon,
-                          color: Colors.white,
-                          size: 15,
+                          label: Text('Comprar'),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
+  }
+
+  Future<bool?> showAddItemConfirmation() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+              'Você já tem itens de outro estabelecimento no seu carrinho!'),
+          content: const Text('Deseja limpar seu carrinho?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('Não'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Sim'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

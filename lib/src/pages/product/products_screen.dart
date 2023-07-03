@@ -91,6 +91,28 @@ class _ProductScreenState extends State<ProductScreen> {
                           color: CustomColors.customSwatchColor,
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text.rich(
+                          TextSpan(
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            children: [
+                              const TextSpan(
+                                text: 'Vendido por: ',
+                              ),
+                              TextSpan(
+                                text: widget.item.store.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -112,14 +134,45 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             Get.back();
-                            cartController.addItemToCart(
-                              item: widget.item,
-                              quantity: cartItemQuantity,
-                            );
-                            navigationController
-                                .navigationPageView(NavigationTab.cart);
+                            //navigationController.navigationPageView(NavigationTab.cart);
+                            if (cartController.cartItems.isNotEmpty) {
+                              if (widget.item.store.id !=
+                                  cartController.cartItems[0].item.store.id) {
+                                bool? result = await showAddItemConfirmation();
+
+                                if (result ?? false) {
+                                  cartController.cartItems.clear();
+                                  utilsServices.showToast(
+                                      message: 'Carrinho limpo!');
+
+                                  cartController.addItemToCart(
+                                    item: widget.item,
+                                    quantity: cartItemQuantity,
+                                  );
+                                  utilsServices.showToast(
+                                      message: 'Produto adicionado!');
+                                } else {
+                                  utilsServices.showToast(
+                                      message: 'Carrinho preservado!');
+                                }
+                              } else {
+                                cartController.addItemToCart(
+                                  item: widget.item,
+                                  quantity: cartItemQuantity,
+                                );
+                                utilsServices.showToast(
+                                    message: 'Produto adicionado!');
+                              }
+                            } else {
+                              cartController.addItemToCart(
+                                item: widget.item,
+                                quantity: cartItemQuantity,
+                              );
+                              utilsServices.showToast(
+                                  message: 'Produto adicionado!');
+                            }
                           },
                           label: const Text(
                             'Adicionar ao Carrinho',
@@ -134,7 +187,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             color: Colors.white,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -153,6 +206,41 @@ class _ProductScreenState extends State<ProductScreen> {
           )
         ],
       ),
+    );
+  }
+
+  Future<bool?> showAddItemConfirmation() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+              'Você já tem itens de outro estabelecimento no seu carrinho!'),
+          content: const Text('Deseja limpar seu carrinho?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text('Não'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text('Sim'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

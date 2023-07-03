@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hiperpratico/src/models/store_model.dart';
 
 part 'item_model.g.dart';
 
@@ -12,6 +13,7 @@ class ItemModel {
   String unit;
   double price;
   String description;
+  StoreModel store;
 
   ItemModel({
     required this.id,
@@ -20,6 +22,7 @@ class ItemModel {
     required this.unit,
     required this.price,
     required this.description,
+    required this.store,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) =>
@@ -29,6 +32,6 @@ class ItemModel {
 
   @override
   String toString() {
-    return 'ItemModel{id: $id, itemName: $itemName, imgUrl: $imgUrl, unit: $unit, price: $price, description: $description}';
+    return 'ItemModel{id: $id, itemName: $itemName, imgUrl: $imgUrl, unit: $unit, price: $price, description: $description, store: $store}';
   }
 }

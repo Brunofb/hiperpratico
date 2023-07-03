@@ -36,6 +36,13 @@ class UtilsServices {
     return dateFormat.format(dateTime.toLocal());
   }
 
+  String formatHours(DateTime dateTime) {
+    initializeDateFormatting();
+
+    DateFormat dateFormat = DateFormat.Hm('pt_BR');
+    return dateFormat.format(dateTime);
+  }
+
   Uint8List decodeQrCodeImage(String value) {
     String base64String = value.split(',').last;
 

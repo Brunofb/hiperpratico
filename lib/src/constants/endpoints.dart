@@ -11,6 +11,7 @@ abstract class Endpoints {
   static String getCarItems = '$baseUrl/get-cart-items';
   static String addItemToCart = '$baseUrl/add-item-to-cart';
   static String changeItemQuantity = '$baseUrl/modify-item-quantity';
+  static String clearAllCart = '$baseUrl/delete-cart-items';
   static String checkout = '$baseUrl/checkout';
   static String getAllOrders = '$baseUrl/get-orders';
   static String getOrderItems = '$baseUrl/get-orders-items';

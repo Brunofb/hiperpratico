@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hiperpratico/src/models/book_model.dart';
+import 'package:get/get.dart';
+import 'package:hiperpratico/src/pages/home/controller/home_controller.dart';
 import 'package:hiperpratico/src/pages/home_global/components/constants.dart';
+import 'package:hiperpratico/src/routes/app_pages.dart';
+import 'package:hiperpratico/src/services/utils.services.dart';
 
-final List<BookModel> books = BookModel.books;
+class BestSellers extends StatelessWidget {
+  final utilsServices = UtilsServices();
 
-class BuildBookList extends StatelessWidget {
-  const BuildBookList({super.key});
+  BestSellers({super.key});
 
-  //We create a StatelessWidget for this one, because we will need to access
-  //the context
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,62 +47,71 @@ class BuildBookList extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
-                  child: const Text("Mais Ofertas"),
+                  child: const Text("Mais"),
                 )
               ],
             ),
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(
-                books.length,
-                    (index) => Padding(
-                  padding: EdgeInsets.only(
-                    bottom: Constants.kPadding * 2,
-                    right: Constants.kPadding,
-                    left: index == 0 ? Constants.kPadding : 0,
-                  ),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Column(
-                      children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          elevation: 4,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset(
-                              books[index].image,
-                              height: 180,
-                              width: 120,
-                              fit: BoxFit.cover,
+            child: GetBuilder<HomeController>(builder: (controller) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  controller.allProducts.length,
+                  (index) => Padding(
+                    padding: EdgeInsets.only(
+                      bottom: Constants.kPadding * 2,
+                      right: Constants.kPadding,
+                      left: index == 0 ? Constants.kPadding : 0,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(
+                          PagesRoutes.productRoute,
+                          arguments: controller.allProducts[index],
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            elevation: 4,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                controller.allProducts[index].imgUrl,
+                                height: 180,
+                                width: 120,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 120,
-                          child: Text(
-                            books[index].title,
+                          SizedBox(
+                            width: 120,
+                            child: Text(
+                              controller.allProducts[index].itemName,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 120,
-                          child: Text(
-                            books[index].subtitle,
-                            style:
-                            const TextStyle(fontSize: 10, color: Colors.blueGrey),
+                          SizedBox(
+                            width: 120,
+                            child: Text(
+                              utilsServices.priceToCurrency(
+                                controller.allProducts[index].price,
+                              ),
+                              style: const TextStyle(
+                                  fontSize: 10, color: Colors.blueGrey),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
           ),
         ],
       ),

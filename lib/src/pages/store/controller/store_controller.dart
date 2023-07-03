@@ -109,7 +109,6 @@ class StoreController extends GetxController {
     if (canLoad) {
       setLoading(true, isStore: true);
     }
-    print(currentCategory!.pagination);
 
     Map<String, dynamic> body = {
       'page': currentCategory!.pagination,

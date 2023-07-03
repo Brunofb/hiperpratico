@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'HiperPratico',
       theme: ThemeData(
         primarySwatch: Colors.orange,
-        scaffoldBackgroundColor: Colors.white.withAlpha(200),
+        scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: PagesRoutes.splashRoute,
